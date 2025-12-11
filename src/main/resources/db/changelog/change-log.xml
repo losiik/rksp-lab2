@@ -1,0 +1,19 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="klosep" id="student" dbms="postgresql">
+        <sqlFile dbms="postgresql"
+                 path="scripts/student.sql"
+                 encoding="UTF-8"
+                 endDelimiter="/"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"
+        />
+        <comment>Создание первой таблицы</comment>
+    </changeSet>
+
+</databaseChangeLog>
