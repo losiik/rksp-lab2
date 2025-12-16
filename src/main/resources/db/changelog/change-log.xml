@@ -16,4 +16,16 @@
         <comment>Создание первой таблицы</comment>
     </changeSet>
 
+    <changeSet author="klosep" id="user_event" dbms="postgresql">
+        <sqlFile dbms="postgresql"
+                 path="scripts/user_event.sql"
+                 encoding="UTF-8"
+                 endDelimiter="/"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"
+        />
+        <comment>Создание таблицы user_event</comment>
+    </changeSet>
+
 </databaseChangeLog>

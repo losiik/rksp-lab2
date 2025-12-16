@@ -3,7 +3,7 @@ info:
   title: Data Service API
   version: 1.0.0
   description: >
-    Внутренний API для управления студентами.
+    Внутренний API для управления студентами и событиями пользователей.
     Этот сервис отвечает за чтение и запись данных в базу данных.
 servers:
   - url: http://localhost:8083
@@ -56,6 +56,68 @@ paths:
         '404':
           description: Студент не найден
 
+  /events:
+    get:
+      summary: Получить все события пользователей
+      description: Возвращает список всех событий пользователей из БД
+      operationId: getAllUserEventDataFromData
+      tags:
+        - UserEventData
+      responses:
+        '200':
+          description: Список событий успешно получен
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserEventDataResponse'
+
+    post:
+      summary: Создать событие в БД
+      description: Создает запись о событии пользователя в базе данных
+      operationId: createUserEventDataInData
+      tags:
+        - UserEventData
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEventDataCreateRequest'
+      responses:
+        '201':
+          description: Событие успешно создано
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEventDataResponse'
+
+  /events/{id}:
+    get:
+      summary: Получить событие по ID
+      description: Возвращает информацию о событии по идентификатору
+      operationId: getUserEventDataByIdFromData
+      tags:
+        - UserEventData
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор события
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Событие найдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEventDataResponse'
+        '404':
+          description: Событие не найдено
+
 components:
   schemas:
     StudentDataCreateRequest:
@@ -84,3 +146,32 @@ components:
         passport:
           type: string
           example: "+7 999 123-45-67"
+
+    UserEventDataCreateRequest:
+      type: object
+      required:
+        - eventType
+        - eventTime
+      properties:
+        eventType:
+          type: string
+          example: "LOGIN"
+        eventTime:
+          type: string
+          format: date-time
+          example: "2025-12-16T04:10:00+03:00"
+
+    UserEventDataResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        eventType:
+          type: string
+          example: "LOGIN"
+        eventTime:
+          type: string
+          format: date-time
+          example: "2025-12-16T04:10:00+03:00"
